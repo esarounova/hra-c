@@ -23,44 +23,41 @@ do {
     case 1:
     postava="Mag";
     stats [0] = {1,};
-    stats [1] = {1,};
-    stats [2] = {1,};
-    stats [3] = {1,};
-    stats [4] = {0,};
+    stats [1] = {6,};
+    stats [2] = {7,};
+    stats [3] = {8,};
+    stats [4] = {5,};
 
     break;
 
     case 2:
     postava="Ranger";
     stats [0] = {1,};
-    stats [1] = {2,};
-    stats [2] = {2,};
-    stats [3] = {2,};
-    stats [4] = {0,};
+    stats [1] = {7,};
+    stats [2] = {5,};
+    stats [3] = {10,};
+    stats [4] = {5,};
     break;
 
     case 3:
     postava ="Cleric";
     stats [0] = {1,};
-    stats [1] = {3,};
-    stats [2] = {3,};
-    stats [3] = {3,};
-    stats [4] = {0,};
+    stats [1] = {5,};
+    stats [2] = {5,};
+    stats [3] = {7,};
+    stats [4] = {5,};
     break;
 
     case 4:
     postava= "Rogue";
     stats [0] = {1,};
-    stats [1] = {4,};
-    stats [2] = {4,};
-    stats [3] = {4,};
-    stats [4] = {0,};
+    stats [1] = {5,};
+    stats [2] = {9,};
+    stats [3] = {8,};
+    stats [4] = {5,};
     break;
-
-    default:
-    cout<< "Spatne zadana hodnota!" << endl;
     }
-cout<< "Level:" << stats [0] << "\n Zivoty:" << stats [1] << "\n Utok:" << stats [2] << "\n Mana" << stats [3] << "\n Zlato:" << stats [4] << endl;
+cout<< "Level: " << stats [0] << "\n Zivoty: " << stats [1] << "\n Utok: " << stats [2] << "\n Mana: " << stats [3] << "\n Zlato: " << stats [4] << endl;
 }
 cout<< "Opravdu chcete byt " << postava << "? (A/N)";
 cin>> postavaAN;
@@ -80,8 +77,51 @@ cout<< "Vitej " << jmeno<< endl;
 }
 }
 
+int Krcma (int stats []){
+cout<< "Vstoupil jsi do maleho domeèku uprostred vesnice, kde te ihned uvita urostly drak"<< endl;
+cout<< "Zdravim priteli. Co to dnes bude?"<< endl;
+cout<< "Vzhlednes nahoru na hospodskeho a tabuli s produkty ktere prodava"<<endl;
+cout<< "1. \n2.\n3. \n4.\n" << endl;
+return 0;
+}
+
+void Vesnice (int stats[], string jmenoV) {
+int KamDal;
+
+cout<< "Vitej ve vesnici" << jmenoV << ", prùzkumníku! \n";
+cout<< "Nápovìda" << endl;
+cout<< "Ve vesnicích muzes prespat (doplneni zivotu a energie) a nebo navštívit lokalni krcmu, kde za menší poplatek sezenes zazracne lektvary (Vylepseni schopnosti)" <<endl;
+cout<< "Nebo take muzete pokraèovat ve sve ceste na dobrodruzstvim!" << endl;
+
+
+cout<< "Mate: " << stats [4] << " Zlata" << endl;
+cout<< "1. Pøespání (stoji: 1 Zlato) \n 2. Krcma \n 3. Jít dál" << endl;
+do {
+cout<< "Kam byste chteli jit?" << endl;
+cin>> KamDal;
+
+} while (KamDal<= 0 || KamDal >= 3);{
+switch (KamDal) {
+case 1:
+break;
+
+case 2:
+Krcma(stats);
+break;
+
+case 3:
+break;
+    }
+}
+}
+int Pyrocoil (){
+}
+
 int main (){
+string jmenoV;
+int stats [10];
 vyberPostavy();
+Vesnice (stats, jmenoV);
 
 return 0;
 }
