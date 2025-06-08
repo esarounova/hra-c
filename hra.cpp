@@ -1,5 +1,13 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
+
+void napoveda (){
+cout<< "\n Napoveda" << endl;
+cout<< "Ve vesnicích muzes prespat (doplneni zivotu a energie) a nebo navštívit lokalni krcmu, kde za menší poplatek sezenes zazracne lektvary (Vylepseni schopnosti)" <<endl;
+cout<< "Nebo take muzete pokračovat ve sve ceste na dobrodruzstvim! \n" << endl;
+}
 
 void vyberPostavy (int stats [],int rnStats []) {
 string postava;
@@ -25,7 +33,7 @@ do {
     stats [1] = {6,};
     stats [2] = {7,};
     stats [3] = {8,};
-    stats [4] = {50,};
+    stats [4] = {5,};
 
     break;
 
@@ -78,12 +86,53 @@ cin>> jmenoAN;
 cout<< "Vitej " << jmeno<< endl;
 }
 }
-
-void inventar (string inve [5]){
+void inventar (string inve [5], int rnStats []){
+    string jj;
+    int N;
+    int pocet =0;
+    string volba;
     cout<< "\n Ve vasem inventari se prave nachazi:" <<endl;
 for (int i=0; i< 5; i++){
-    cout<< inve [i] << endl;
+    if (inve[i].empty()){
+            cout<< "";
+            pocet++;
+} else {
+ cout<< i+1 << ". " << inve [i] << endl;
 }
+}
+if (pocet==5){
+    cout<< "Neni tu zhola nic :c" << endl;
+}
+
+else {
+cout<< "Chcete něco pouzit? (A/N)" << endl;
+cin>> jj;
+if (jj=="A" || jj=="a"){
+   do{ cout<< "Kterou z nich chcete pouzit? (1-5)" << endl;
+    cin>> N;
+        if ((N <1 || N>5)||(inve[N-1].empty()))
+            cout<< "Spatne zvolena hodnota" << endl;
+    }while ((N <1 || N>5)||(inve[N-1].empty()));
+    cout<< "Opravdu chcete použit predmet: " << inve[N-1] << "?" << endl;
+    cin>> volba;
+
+    if (inve[N-1]== "Bilý Monster"){
+        rnStats [3] = rnStats[3] + 4;
+    cout<< "Vase nova stamina/mana: " << rnStats [3] << " Efekt potrva do konce souboje" << endl;
+    inve[N-1]= "";
+    }
+    else if (inve[N-1]== "Bagetku z matu") {
+        rnStats [1] = rnStats[1] + 2;
+    cout<< "Vase nova zivoty: " << rnStats [1] << " Efekt potrva do konce souboje" << endl;
+    inve[N-1]= "";
+    }
+        else if (inve[N-1]== "Blato v korbelu") {
+             rnStats [2] = rnStats[2] + 2;
+    cout<< "Vas novy utok: " << rnStats [2] << " Efekt potrva do konce souboje" << endl;
+    inve[N-1]= "";
+        }
+    }
+    }
 }
 
 void Prespani(int stats [],int rnStats []) {
@@ -97,36 +146,48 @@ cout<< "Zivoty byly doplneny tvym krasnym slofikem v pokoji hostince, a vsechny 
 cout<< "Nyni musite pokracovat v ceste."<< endl;
 }
 
-int monstrum1 (int rnStats [], string inve [], string hlaska, string jmeno){
+int monstrum1 (int rnStats [], string inve [], string hlaska, string jmenom, int hp, int ut){
 int utok;
-int zlato;
-int n= rand () % 101;
-if (n>50){
-    zlato= rand() % 6;
-}
-cout<< zlato;
-int hp= 2;
-cout<< "Po par minutach cesty na tebe z poza kere vyskocil hrozivý"<< jmeno << endl;
+int sance = rand () %2;
+int penize = rand() % 11;
+cout<< "Po par minutach cesty na tebe z poza kere vyskocil hrozivý"<< jmenom << "\n ma " << hp << "HP zatimco ty mas " << rnStats[1] << "HP " << endl;
 do{
 do{
 cout<< "Co udelate? \n1. Otevreni inventare \n2. Utok \n3. Pokus o uprch";
-
 cin>> utok;
 } while (utok >3 || utok <1);
-        if (utok == 3){
-           cout<< "To ted bohuzel nefunguje";
-          } else if (utok == 1){
-    inventar(inve);
-           }
-        else if (utok == 2){
-        cout<< "monstrum rika au au" << endl;
+switch (utok) {
+case 1:
+    inventar(inve, rnStats);
+    break;
+
+case 2:
+    if (rnStats[3]<1){
+        cout<<"Kvuli nedostatku energie neubirate zadne zivoty" << endl;
+    } else
+    cout<< "Utocis na monstrum" << "\n"<< jmenom<< " prisel o " << rnStats[2] << "HP." << endl;
+        hp= hp - rnStats[2];
+        rnStats[3]-2;
+    break;
+
+case 3:
+    cout<< "To ted bohuzel nefunguje :C"<< endl;
+    break;
+}
+if (hp>=1 || rnStats[1]>=1){
+        cout<< jmenom << " utoci a plyve na tebe kyselé sliny. \n Mas " << rnStats[1] << " HP" << endl;
     }
-} while (hp >=1 || rnStats [1] >=1);
-if (rnStats==0){
+} while (hp>=1 && rnStats[1]>=1);
+if (rnStats<=0){
         cout<< "Zemrel jsi v boji" << endl;
     return 0;
-}else
-cout<< "Vyhral jsi v boji, gratulace";
+}else if (hp<1){
+cout<< "Vyhral jsi v boji, gratulace" << endl << endl;
+if (sance ==1){
+cout<< "Z monstra ti padlo " << penize << " zlatych" << endl << endl;
+rnStats[4]=+ penize;
+}
+}
 }
 
 void Krcma (int rnStats [], string inve [5]){
@@ -205,10 +266,7 @@ cout<< "Na videnou, priteli hospodsky rekne behem toho co odchazis z krcmy \n" <
 void Vesnice (int rnStats[], int stats[], string jmenoV, string inve [5]) {
 int KamDal;
 
-cout<< "Vitej ve vesnici " << jmenoV << ", pruzkumniku! \n \n";
-cout<< "Napoveda" << endl;
-cout<< "Ve vesnicích muzes prespat (doplneni zivotu a energie) a nebo navštívit lokalni krcmu, kde za menší poplatek sezenes zazracne lektvary (Vylepseni schopnosti)" <<endl;
-cout<< "Nebo take muzete pokračovat ve sve ceste na dobrodruzstvim! \n" << endl;
+cout<< "\n Vitej ve vesnici " << jmenoV << ", pruzkumniku! \n \n";
 cout<< " \n Mate: " << rnStats[4] << " Zlata" << endl;
 cout<< "1. Prespani (stoji: 1 Zlato) \n2. Krcma \n3. Jit dal" << endl;
 do {
@@ -234,16 +292,29 @@ break;
 
 
 int main (){
+    srand(time(0));
 string hlaska;
-string jmeno;
+int hp, hp2, hp3;
+int ut, ut2, ut3;
+string jmenom, jmenom2, jmenom3;
 string inve [5];
 int stats [5];
 int rnStats [5];
 string jmenoV;
 
 vyberPostavy(stats, rnStats);
+napoveda();
 jmenoV = "Mývalice";
 Vesnice (stats, rnStats, jmenoV, inve);
-monstrum1 (rnStats, inve, hlaska, jmeno);
+    jmenom= "Rizzler";
+    hp= 4;
+    ut=2;
+        monstrum1 (rnStats, inve, hlaska, jmenom, hp, ut);
+    jmenom= "Ye";
+    hp= 8;
+    ut=4;
+        monstrum1 (rnStats, inve, hlaska, jmenom, hp, ut);
+jmenoV = "Gainovice";
+Vesnice (stats, rnStats, jmenoV, inve);
 return 0;
 }
