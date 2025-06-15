@@ -1,3 +1,1 @@
-‿̩͙⊱༒︎༻♱༺༒︎⊰‿̩͙
-Moje skvělá c++ hra :3
-‿̩͙⊱༒︎༻♱༺༒︎⊰‿̩͙
+Vítejte do README filu mé skvělé hry :3
