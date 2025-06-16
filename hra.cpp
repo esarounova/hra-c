@@ -283,7 +283,7 @@ int monstrum1 (int rnStats [], int stats [], string inve [], string hlaska, stri
 int utok;
 int sance = rand () %2;
 int penize = rand() % 11;
-cout<< "Po par minutach cesty na tebe z poza kere vyskocil hrozivý"<< jmenom << "\n ma " << hp << "HP zatimco ty mas " << rnStats[1] << "HP " << endl;
+cout<< "Po par minutach cesty na tebe z poza kere vyskocil hrozivy "<< jmenom << "\n ma " << hp << "HP zatimco ty mas " << rnStats[1] << "HP " << endl;
 do{
 do{
 cout<< "Co udelate? \n1. Otevreni inventare \n2. Utok \n3. Pokus o uprch"<< endl;
@@ -381,7 +381,6 @@ bool ohen;
 int kola =1 ;
 int utok;
 cout<< "Skace na vas Pyrocoil ma " << hp << "HP" << endl;
-//kazde kolo 2dm- if hori 3dm-na 2 kola, kazde 4. mf bouchne hp-20 rnstats 1 -15, "Pyrovoil preteka a exploduje!"
 do{
 do{
 cout<< "Co udelate? \n1. Otevreni inventare \n2. Utok \n3. Pokus o uprch"<< endl;
@@ -414,7 +413,7 @@ if (hp>=1 && kola%4==0) {
     rnStats [1] = rnStats [1] - 2;
 cout<< "Pyrocoil utoci a zapaluje vas. \n Mas " << rnStats[1] << " HP a ubira vam utok" << endl;
 kola++;
-    } else {
+    } else if (hp>=1) {
     rnStats [1] = rnStats [1] - 1;
 cout<< "Pyrocoil utoci a zapaluje vas. \n Mas " << rnStats[1] << " HP a ubira vam utok" << endl;
 ohen =1;
